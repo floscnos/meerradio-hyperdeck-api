@@ -2,20 +2,15 @@ import express from "express";
 import apiRouter from "./router.js";
 import {hyperdeckInit, pollStatus} from "./hyperdeck-controller.js";
 import cors from "cors";
-import ws from "ws";
 import { WebSocketServer } from "ws";
 import dotenv from "dotenv";
 dotenv.config();
-
 
 const app = express();
 
 app.use(cors());
 
-
-app.get('/', (req, res) => {
-    res.send("hello world");
-})
+app.use(express.static('frontend'))
 
 app.use('/api', apiRouter);
 
@@ -25,8 +20,8 @@ try {
     console.error("Connection to hyperdeck failed: " + error)
     process.exit(1);
 }
-const server = app.listen(3000, () => {
-    console.log("listening on port 3000")
+const server = app.listen(process.env.PORT, () => {
+    console.log(`listening on port ${process.env.PORT}`)
 })
 
 export const connectedStatusClients = [];
