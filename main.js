@@ -15,7 +15,7 @@ app.use(express.static('frontend'))
 app.use('/api', apiRouter);
 
 try {
-    if (!process.env.HYPERDECK_IP) throw new Error("Hyperdeck IP not set in .env")
+    if (process.env.HYPERDECK_IP === 'notset') throw new Error("Hyperdeck IP not set in .env: " + process.env.HYPERDECK_IP)
     await hyperdeckInit();
 } catch (error) {
     console.error("Connection to hyperdeck failed: " + error)

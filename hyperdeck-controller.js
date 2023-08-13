@@ -12,6 +12,7 @@ const hyperdeckPlayStatusses = {
     STOPPED: 'stopped'
 }
 export async function hyperdeckInit() {
+    console.log(`Hyperdeck ip: ${process.env.HYPERDECK_IP}`);
     hyperdeck = new Hyperdeck(process.env.HYPERDECK_IP);
 
     console.log("Connecting to Hyperdeck..")

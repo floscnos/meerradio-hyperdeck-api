@@ -1,5 +1,5 @@
 FROM --platform=linux/amd64 node:18-alpine
-ENV HYPERDECK_IP=10.52.40.21
+ENV HYPERDECK_IP=notset
 ENV PORT=3000
 
 WORKDIR /usr/src/app
