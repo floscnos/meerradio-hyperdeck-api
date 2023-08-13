@@ -15,13 +15,14 @@ app.use(express.static('frontend'))
 app.use('/api', apiRouter);
 
 try {
+    if (!process.env.HYPERDECK_IP) throw new Error("Hyperdeck IP not set in .env")
     await hyperdeckInit();
 } catch (error) {
     console.error("Connection to hyperdeck failed: " + error)
     process.exit(1);
 }
-const server = app.listen(process.env.PORT, () => {
-    console.log(`listening on port ${process.env.PORT}`)
+const server = app.listen(process.env.PORT || 3000, () => {
+    console.log(`listening on port ${process.env.PORT || 3000}`)
 })
 
 export const connectedStatusClients = [];
