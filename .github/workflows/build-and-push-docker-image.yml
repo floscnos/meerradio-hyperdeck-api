@@ -12,6 +12,30 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
+  pull-and-build-frontend:
+    name: Pull and Build Frontend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+        with:
+          repository: floscnos/hyperdeck-controller-frontend
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-frontend
+          path: |
+            dist
+
+
   build-and-push-image:
     name: Build and Push
     runs-on: ubuntu-latest
@@ -23,6 +47,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Download build Frontend
+        uses: actions/download-artifact@v3
+        with:
+          name: build-frontend
 
       - name: Log in to the Container registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
