@@ -198,3 +198,37 @@ async function uploadToHyperdeck(file, jobId) {
     }
     client.close()
 }
+
+export async function deleteClip(req, res) {
+    const filename = req.params.filename
+
+    const client = new Client();
+    client.ftp.verbose = false;
+
+    try {
+        await client.access({
+            host: process.env.HYPERDECK_IP,
+            user: "anonymous",
+            password: "anonymous",
+            secure: false
+        })
+
+        try {
+            await client.remove(`/1/${filename}`);
+        } catch (e) {
+
+        }
+        try {
+            await client.remove(`/2/${filename}`);
+        } catch (e) {
+
+        }
+
+    } catch (e) {
+        console.log(e)
+    }
+
+    client.close()
+    res.sendStatus(200)
+
+}

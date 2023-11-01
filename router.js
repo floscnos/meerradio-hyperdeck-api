@@ -1,6 +1,7 @@
 import express from "express";
 import multer from "multer";
 import {
+    deleteClip,
     getClips, getDiskInfo,
     getStatus,
     setClip,
@@ -28,6 +29,8 @@ apiRouter.get('/singleClip', toggleSingleClip);
 
 apiRouter.get('/clips', getClips);
 apiRouter.get('/setClip/:clipId', setClip);
+
+apiRouter.delete('/clips/:filename', deleteClip);
 
 const storage = multer.diskStorage({
     destination: (req, res, cb) => {
