@@ -16,7 +16,7 @@ import {
 const apiRouter = express.Router();
 
 apiRouter.get('/', (req, res) => {
-    res.send("hello world from api");
+    res.send("Hyperdeck api v0.1.2");
 })
 
 apiRouter.get('/status', getStatus);
